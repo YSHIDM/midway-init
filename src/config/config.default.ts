@@ -71,8 +71,5 @@ export default (appInfo: MidwayAppInfo) => {
       secret: 'xxxxxxxxxxxxxx', // fs.readFileSync('xxxxx.key')
       expiresIn: '1800', // https://github.com/vercel/ms
     },
-    rabbitmq: {
-      url: 'amqp://yshi:yshidm@49.232.26.20:5672',
-    },
   } as MidwayConfig;
 };
