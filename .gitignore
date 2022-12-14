@@ -15,3 +15,4 @@ run/
 .tsbuildinfo.*
 .vscode
 .history
+src/config/config.local.ts
