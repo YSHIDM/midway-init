@@ -1,13 +1,6 @@
-const f = ({ a, b, ...data }) => {
-  console.log('data :>>', data);
-  console.log({
-    a,
-    ...data,
-  });
-};
-f({
-  a: 1,
-  b: 2,
-  c: 3,
-  d: 4,
-});
+const { customAlphabet } = require('nanoid')
+// import { customAlphabet } from 'nanoid';
+
+const customNanoid = customAlphabet('alphabet', length - 'prefix'.length);
+
+console.log('customNanoid() :>>', customNanoid())

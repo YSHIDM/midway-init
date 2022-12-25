@@ -1,7 +1,5 @@
 import { Config, Inject, Provide } from '@midwayjs/decorator';
-import { JwtService } from '@midwayjs/jwt';
 import { RedisService } from '@midwayjs/redis';
-import { Context } from '@midwayjs/web';
 import { KEYUTIL, KJUR } from 'jsrsasign';
 // import {
 //   generateKeyPairSync,
@@ -24,12 +22,6 @@ import { KEYUTIL, KJUR } from 'jsrsasign';
 
 @Provide()
 export class CommonService {
-  @Inject()
-  ctx: Context;
-  @Config('jwt')
-  jwtConfig;
-  @Inject()
-  jwtService: JwtService;
   @Inject()
   redisService: RedisService;
   @Config('statusCode')
@@ -155,29 +147,4 @@ export class CommonService {
   //   verify.update('data to sign')
   //   return verify.verify(publicKey, signData, 'hex');
   // }
-
-  async createToken(user) {
-    const { secret, expiresIn } = this.jwtConfig;
-    console.log('user, secret :>>', user, secret);
-    console.log('expiresIn :>>', expiresIn);
-
-    const token = await this.jwtService.sign(user, secret, {
-      expiresIn,
-    });
-    this.ctx.set('token', token);
-    this.ctx.set('Access-Control-Expose-Headers', 'token');
-    const tokenKey = 'token:' + this.md5(token);
-    await this.redisService.set(tokenKey, 1);
-    await this.redisService.expire(tokenKey, expiresIn * 2);
-  }
-  /**
-   *
-   * @param token
-   * @returns
-   */
-  async validToken(token) {
-    const tokenKey = 'token:' + this.md5(token);
-    const tokenKeyValue = this.redisService.get(tokenKey);
-    return !!tokenKeyValue;
-  }
 }

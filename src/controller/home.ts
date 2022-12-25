@@ -1,14 +1,15 @@
 import { Controller, Get, Inject } from '@midwayjs/decorator';
 import { QueueJobService } from '../service/queueJob';
 import { RabbitmqService } from '../service/rabbitmq';
+import { JwtMiddleware } from '../middleware/jwt.middleware';
 
-@Controller('/')
+@Controller('/home', { middleware: [JwtMiddleware] })
 export class HomeController {
   @Inject()
   queueJobService: QueueJobService;
   @Inject()
   rabbitmqService: RabbitmqService;
-  @Get('/')
+  @Get('/tom')
   async home() {
     const user = {
       name: 'tom',

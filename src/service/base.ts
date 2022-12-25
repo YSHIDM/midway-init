@@ -2,16 +2,13 @@ import { Provide, Inject } from '@midwayjs/decorator';
 import { RedisService } from '@midwayjs/redis';
 import { Op } from 'sequelize';
 import { customAlphabet } from 'nanoid';
-// import { Base } from '../entity/base.ts1';
-// import { RedisServiceFactory } from '@midwayjs/redis';
-// import { ISpace } from '../interface';
+
 
 @Provide()
 export class BaseService {
   model; // 继承
   okCode: 2000;
   constructor() {
-    // this.model = Base;
     this.okCode = 2000;
   }
   @Inject()
@@ -30,8 +27,8 @@ export class BaseService {
   }
   /**
    * 获取主键
-   * @param prefix 前缀
-   * @returns {toString}
+   * @param {string} prefix 前缀
+   * @return {string} id
    */
   getId(prefix) {
     return this.getCode(

@@ -43,8 +43,6 @@ export class UserController {
   @Get('/get/:uid')
   async getUser() {
     const params = this.ctx.params;
-    console.info('params.uid :>>', params.uid);
-
     let data: { uid: string; username: string; phone: string; email: string } =
       await this.cache.get(params.uid);
     if (!data) {
@@ -94,10 +92,9 @@ export class UserController {
       encryptPassword,
       privateKey
     );
-    console.log('password :>>', password);
     password = this.commonService.md5(password);
     if (password === userData.password) {
-      await this.commonService.createToken({ nickname });
+      await this.userService.createToken({ nickname });
     } else {
       return this.statusCode.ERROR.USER.PW_ERROR;
     }
@@ -129,8 +126,8 @@ export class UserController {
       privateKey
     );
     password = this.commonService.md5(password);
-    const data = await this.userService.saveUser({ nickname, password });
-    await this.commonService.createToken({ nickname });
+    const data = await this.userService.saveUser({ nickname, password, creator: nickname });
+    await this.userService.createToken({ nickname });
     this.ctx.remove('publicKeyMd5');
     this.redisService.del('publicKeyMd5');
     return { code: this.userService.okCode, data };

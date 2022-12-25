@@ -1,7 +1,62 @@
 {
-  "extends": "./node_modules/mwts/",
   "ignorePatterns": ["node_modules", "dist", "test", "jest.config.js", "typings"],
   "env": {
+    "node": true,
+    "browser": true,
+    "es2020": true,
+    "es6": true,
     "jest": true
+  },
+  "extends": [
+    "eslint:recommended"
+    // "plugin:@typescript-eslint/recommended"
+  ],
+  "plugins": [
+    // "@typescript-eslint",
+    // "typescript",
+    "jsdoc"
+  ],
+  "rules": {
+    "eqeqeq": "error",
+    // "typescript/class-name-casing": "error",
+    // "typescript/no-type-alias": "error",
+    "no-eval": "error",
+    "no-new-func": "error",
+    "no-self-compare": "error",
+    "no-var": "error",
+    "no-mixed-requires": "off",
+    "no-use-before-define": "error",
+    "no-bitwise": "off",
+    "space-before-blocks": "error",
+    "array-bracket-spacing": "off",
+    "dot-notation": "off",
+    "indent": [
+      "error",
+      2
+    ],
+    "linebreak-style": "off",
+    "quotes": [
+      "error",
+      "single"
+    ],
+    "semi": [
+      "error",
+      "never"
+    ],
+    "strict": [
+      2,
+      "never"
+    ],
+    "valid-jsdoc": [
+      2,
+      {
+        "prefer": {
+          "return  ": "return "
+        }
+        // "js/ts.implicitProjectConfig.checkJs": true
+      }
+    ],
+    "jsdoc/check-types": 1, // Recommended
+    "jsdoc/check-values": 1 // Recommended
   }
 }

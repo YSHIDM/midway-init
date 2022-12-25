@@ -2,7 +2,6 @@
 import { Column, Table } from 'sequelize-typescript';
 import { Base } from './Base';
 
-@Table
 @Table({
   timestamps: true, // 自动维护时间
   tableName: 'user', // 数据库表名称

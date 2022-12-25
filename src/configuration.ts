@@ -13,6 +13,8 @@ import { Application } from 'egg';
 import { ILifeCycle, Inject } from '@midwayjs/core';
 import { join } from 'path';
 import * as rabbitmq from '@midwayjs/rabbitmq';
+import { AuthenticationMiddleware } from './middleware/AuthenticationMiddleware';
+import { JwtMiddleware } from './middleware/jwt.middleware';
 // import { ScheduleService } from './service/schedule';
 // import { UserService } from './service/user';
 
@@ -41,6 +43,7 @@ export class ContainerLifeCycle implements ILifeCycle {
   // bullApp: bull.Application;
 
   async onReady() {
+    this.app.useMiddleware([AuthenticationMiddleware, JwtMiddleware]);
     // console.log(111111, 'onReady');
     // // 在这个阶段，装饰器队列还未创建，使用 API 提前手动创建队列，装饰器会复用同名队列
     // const queue = this.bullFramework.createQueue('test2');

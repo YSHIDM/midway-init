@@ -1,10 +1,12 @@
 import { BaseService } from './base';
 import { CommonService } from './common';
-import { Inject, Provide } from '@midwayjs/decorator';
+import { Config, Inject, Provide } from '@midwayjs/decorator';
 import { IUserOptions } from '../interface';
 import { RedisService } from '@midwayjs/redis';
 import { User } from '../entity/User';
 import { RabbitmqService } from './rabbitmq';
+import { JwtService } from '@midwayjs/jwt';
+import { Context } from '@midwayjs/web';
 // import { RedisServiceFactory } from '@midwayjs/redis';
 
 @Provide()
@@ -15,6 +17,12 @@ export class UserService extends BaseService {
     this.model = User;
   }
 
+  @Inject()
+  ctx: Context;
+  @Config('jwt')
+  jwtConfig;
+  @Inject()
+  jwtService: JwtService;
   @Inject()
   redisService: RedisService;
   @Inject()
@@ -27,7 +35,8 @@ export class UserService extends BaseService {
 
   async addUser(obj) {
     obj.id = this.getId('SPC');
-    obj.creator = 'YSHI';
+    console.log('this.ctx :>>', this.ctx)
+    obj.creator = obj.creator || this.ctx.user.nickname;
     return await User.create(obj).then(d => d.toJSON());
   }
 
@@ -74,5 +83,33 @@ export class UserService extends BaseService {
     const { publicKey, privateKey } = this.commonSvc.getKeyPair();
     this.redisService.set(this.commonSvc.md5(publicKey), privateKey);
     return { code: this.okCode, data: publicKey };
+  }
+
+  async createToken(user) {
+    const { secret, expiresIn } = this.jwtConfig;
+
+    const token = await this.jwtService.sign(user, secret, {
+      expiresIn,
+    });
+    this.ctx.set('token', token);
+    this.ctx.set('Access-Control-Expose-Headers', 'token');
+    const tokenKey = 'token:' + this.commonSvc.md5(token);
+    await this.redisService.set(tokenKey, 1);
+    await this.redisService.expire(tokenKey, expiresIn * 2);
+  }
+  /**
+   * 是否存在 redis 记录
+   * @param token
+   * @returns
+   */
+  async validToken(token) {
+    const tokenKey = 'token:' + this.commonSvc.md5(token);
+    const tokenKeyValue = await this.redisService.get(tokenKey);
+    return !!tokenKeyValue;
+  }
+  async removeToken(token) {
+    this.ctx.cookies.set('token', '', { maxAge: 0 })
+    const tokenKey = 'token:' + this.commonSvc.md5(token);
+    await this.redisService.del(tokenKey);
   }
 }

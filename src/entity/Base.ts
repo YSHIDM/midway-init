@@ -5,8 +5,7 @@ import {
   Model,
   CreatedAt,
   UpdatedAt,
-} from 'sequelize-typescript';
-// import { BaseTable } from '@midwayjs/sequelize';
+} from 'sequelize-typescript'
 
 @Table
 export class Base extends Model {

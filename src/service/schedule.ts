@@ -54,7 +54,7 @@ export class ScheduleService extends BaseService {
     return data;
   }
   async setSchedule(obj) {
-    const jobId = await this.queueJobService.updateQueueJob(obj);
+    const jobId = await this.queueJobService.replaceQueueJob(obj);
     obj.sourceId = jobId;
     const data = await this.saveSchedule(obj);
     return this.resultData(data);
