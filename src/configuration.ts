@@ -5,6 +5,8 @@ import * as crossDomain from '@midwayjs/cross-domain';
 import * as egg from '@midwayjs/web';
 import * as info from '@midwayjs/info';
 import * as jwt from '@midwayjs/jwt';
+import * as passport from '@midwayjs/passport';
+import * as rabbitmq from '@midwayjs/rabbitmq';
 import * as redis from '@midwayjs/redis';
 import * as sequelize from '@midwayjs/sequelize';
 import * as socketio from '@midwayjs/socketio';
@@ -12,9 +14,6 @@ import { App, Configuration } from '@midwayjs/decorator';
 import { Application } from 'egg';
 import { ILifeCycle, Inject } from '@midwayjs/core';
 import { join } from 'path';
-import * as rabbitmq from '@midwayjs/rabbitmq';
-// import { ScheduleService } from './service/schedule';
-// import { UserService } from './service/user';
 
 @Configuration({
   imports: [
@@ -29,6 +28,7 @@ import * as rabbitmq from '@midwayjs/rabbitmq';
     info,
     crossDomain,
     rabbitmq,
+    passport,
   ],
   importConfigs: [join(__dirname, './config')],
 })

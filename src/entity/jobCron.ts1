@@ -1,0 +1,12 @@
+import { Table, Model, Column, PrimaryKey } from 'sequelize-typescript';
+
+@Table
+export class JobCron extends Model {
+  @PrimaryKey
+  id: string;
+  @Column
+  name: string;
+
+  @Column
+  birthday: Date;
+}

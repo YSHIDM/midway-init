@@ -1,8 +1,7 @@
 import { Config, Inject, Middleware } from '@midwayjs/decorator';
 import { Context, NextFunction } from '@midwayjs/web';
-// import { httpError } from '@midwayjs/core';
 import { JwtService } from '@midwayjs/jwt';
-import { CommonService } from '../service/common';
+import { UserService } from '../service/user';
 
 @Middleware()
 export class JwtMiddleware {
@@ -22,6 +21,15 @@ export class JwtMiddleware {
       // 从 header 上获取校验信息
       const token = ctx.get('token');
 
+      const userService = await ctx.requestContext.getAsync<UserService>(
+        UserService
+      );
+      const b = await userService.validToken(token);
+      if (!b) {
+        ctx.cookies.set('token', '', { maxAge: 0 });
+        return this.statusCode.ERROR.AUTHENTICATION.TOKEN_EXPIRE;
+      }
+      let isExpired = false;
       try {
         //jwt.verify方法验证token是否有效
         await this.jwtService.verify(token, this.jwtConfig.secret, {
@@ -35,24 +43,33 @@ export class JwtMiddleware {
           'jwt malformed',
         ];
         if (e.message === 'jwt expired') {
-          // 过期
-
-          const commonService =
-            await ctx.requestContext.getAsync<CommonService>(CommonService);
-          const b = await commonService.validToken(token);
-          if (!b) {
-            return this.statusCode.ERROR.AUTHENTICATION.TOKEN_EXPIRE;
-          }
-          const tokenUser = await this.jwtService.decode(token);
-          await commonService.createToken({ nickname: tokenUser['nickname'] });
+          isExpired = true;
         } else if (messageArray.includes(e.message)) {
           // 无效的token
+          await userService.removeToken(token);
           return this.statusCode.ERROR.AUTHENTICATION.BAD_TOKEN;
         } else {
           throw e;
         }
       }
-      // 有这个人吗
+      // { nickname: 'YSHI', iat: 1671853582, exp: 1671853583 }
+      const jwtObj = await this.jwtService.decode(token);
+
+      const user = await userService.getData({
+        nickname: jwtObj.valueOf()['nickname'],
+      });
+      if (!user) {
+        await userService.removeToken(token);
+        return this.statusCode.ERROR.AUTHENTICATION.USER_NOT_EXIST;
+      }
+      if (isExpired) {
+        // 登录状态延期
+        const tokenUser = await this.jwtService.decode(token);
+        await userService.createToken({ nickname: tokenUser['nickname'] });
+      }
+      console.log('user :>>', user);
+      ctx.state.user = user;
+      console.log('ctx :>>', ctx);
       await next();
     };
   }

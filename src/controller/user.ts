@@ -1,8 +1,7 @@
 import { Application as SocketApplication } from '@midwayjs/socketio';
-import { Application } from '@midwayjs/web';
+import { Application, Context } from '@midwayjs/web';
 import { CacheManager } from '@midwayjs/cache';
 import { CommonService } from '../service/common';
-import { Context } from 'egg';
 import { RedisService } from '@midwayjs/redis';
 import { UserService } from '../service/user';
 import {
@@ -97,7 +96,7 @@ export class UserController {
     console.log('password :>>', password);
     password = this.commonService.md5(password);
     if (password === userData.password) {
-      await this.commonService.createToken({ nickname });
+      await this.userService.createToken({ nickname });
     } else {
       return this.statusCode.ERROR.USER.PW_ERROR;
     }
@@ -130,7 +129,7 @@ export class UserController {
     );
     password = this.commonService.md5(password);
     const data = await this.userService.saveUser({ nickname, password });
-    await this.commonService.createToken({ nickname });
+    await this.userService.createToken({ nickname });
     this.ctx.remove('publicKeyMd5');
     this.redisService.del('publicKeyMd5');
     return { code: this.userService.okCode, data };

@@ -1,0 +1,15 @@
+/** 文件管理 */
+import { Column, Model } from 'sequelize-typescript';
+
+export class MyFile extends Model {
+  @Column({
+    comment: '名字',
+  })
+  name: string;
+  // 位置
+  // 空间大小
+  // 尺寸
+  // 时长
+  // ...
+  //
+}

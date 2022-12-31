@@ -1,5 +1,5 @@
 import { Inject, Controller, Post, Body } from '@midwayjs/decorator';
-import { Context } from 'egg';
+import { Context } from '@midwayjs/web';
 import { IGetUserResponse } from '../interface';
 import { ScheduleService } from '../service/schedule';
 
