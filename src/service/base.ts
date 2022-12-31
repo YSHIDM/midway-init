@@ -1,7 +1,8 @@
-import { Provide, Inject } from '@midwayjs/decorator';
-import { RedisService } from '@midwayjs/redis';
-import { Op } from 'sequelize';
+import { Context } from '@midwayjs/web';
 import { customAlphabet } from 'nanoid';
+import { Inject, Provide } from '@midwayjs/decorator';
+import { Op } from 'sequelize';
+import { RedisService } from '@midwayjs/redis';
 
 
 @Provide()
@@ -11,6 +12,8 @@ export class BaseService {
   constructor() {
     this.okCode = 2000;
   }
+  @Inject()
+  ctx: Context;
   @Inject()
   redisService: RedisService;
 
@@ -94,7 +97,7 @@ export class BaseService {
    */
   async update(obj) {
     // TODO: 修改人
-    // obj.modifier = this.ctx.state.user.userId;
+    obj.modifier = this.ctx.state.user.nickname;
     return this.model
       .update(obj, {
         where: {

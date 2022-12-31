@@ -1,12 +1,12 @@
 import { BaseService } from './base';
 import { CommonService } from './common';
 import { Config, Inject, Provide } from '@midwayjs/decorator';
+import { Context } from '@midwayjs/web';
 import { IUserOptions } from '../interface';
+import { JwtService } from '@midwayjs/jwt';
+import { RabbitmqService } from './rabbitmq';
 import { RedisService } from '@midwayjs/redis';
 import { User } from '../entity/User';
-import { RabbitmqService } from './rabbitmq';
-import { JwtService } from '@midwayjs/jwt';
-import { Context } from '@midwayjs/web';
 // import { RedisServiceFactory } from '@midwayjs/redis';
 
 @Provide()

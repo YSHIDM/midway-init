@@ -64,8 +64,8 @@ export class JwtMiddleware {
         await userService.createToken({ nickname: tokenUser['nickname'] });
       }
       console.log('user :>>', user)
-      ctx.user = user;
-      console.log('ctx :>>', ctx)
+      ctx.state.user = user;
+      console.log('ctx :>>', ctx.state)
       await next();
     };
   }
