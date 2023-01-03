@@ -22,7 +22,7 @@ export class JwtMiddleware {
       const token = ctx.get('token');
 
       const userService = await ctx.requestContext.getAsync<UserService>(UserService);
-      const b = await userService.validToken(token);
+      const b = await userService.hasToken(token);
       if (!b) {
         ctx.cookies.set('token', '', { maxAge: 0 })
         return this.statusCode.ERROR.AUTHENTICATION.TOKEN_EXPIRE;
@@ -63,9 +63,7 @@ export class JwtMiddleware {
         const tokenUser = await this.jwtService.decode(token);
         await userService.createToken({ nickname: tokenUser['nickname'] });
       }
-      console.log('user :>>', user)
       ctx.state.user = user;
-      console.log('ctx :>>', ctx.state)
       await next();
     };
   }
@@ -75,7 +73,8 @@ export class JwtMiddleware {
     return (
       ctx.path === '/user/getPublicKey' ||
       ctx.path === '/user/signIn' ||
-      ctx.path === '/user/signUp'
+      ctx.path === '/user/signUp' ||
+      ctx.path === '/user/logout'
     );
   }
 }

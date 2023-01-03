@@ -29,6 +29,8 @@ export class UserService extends BaseService {
   commonSvc: CommonService;
   @Inject()
   rabbitmqService: RabbitmqService;
+  @Config('statusCode')
+  statusCode;
 
   // @Inject()
   // redisServiceFactory: RedisServiceFactory;
@@ -97,12 +99,24 @@ export class UserService extends BaseService {
     await this.redisService.set(tokenKey, 1);
     await this.redisService.expire(tokenKey, expiresIn * 2);
   }
+  async logout() {
+    const token = this.ctx.get('token');
+    if (!token) {
+      return this.statusCode.SUCCESS.LOGOUT.OUTED;
+    }
+    const tokenObj = await this.jwtService.decode(token);
+    if (!tokenObj) {
+      return this.statusCode.SUCCESS.LOGOUT.OUTED;
+    }
+    await this.removeToken(token)
+    return this.statusCode.SUCCESS.LOGOUT.OK;
+  }
   /**
    * 是否存在 redis 记录
    * @param token
    * @returns
    */
-  async validToken(token) {
+  async hasToken(token) {
     const tokenKey = 'token:' + this.commonSvc.md5(token);
     const tokenKeyValue = await this.redisService.get(tokenKey);
     return !!tokenKeyValue;

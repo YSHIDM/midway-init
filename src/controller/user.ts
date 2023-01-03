@@ -132,6 +132,8 @@ export class UserController {
     this.redisService.del('publicKeyMd5');
     return { code: this.userService.okCode, data };
   }
-  // @Post('/logout')
-  // logout() { }
+  @Post('/logout')
+  async logout() {
+    return await this.userService.logout()
+  }
 }

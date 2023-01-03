@@ -1,4 +1,5 @@
 import { MidwayAppInfo, MidwayConfig } from '@midwayjs/core';
+import { STATUS_CODE } from '../constant/STATUS_CODE';
 // import { JobCron } from '../entity/jobCron.ts1';
 
 export default (appInfo: MidwayAppInfo) => {
@@ -69,7 +70,8 @@ export default (appInfo: MidwayAppInfo) => {
     },
     jwt: {
       secret: 'xxxxxxxxxxxxxx', // fs.readFileSync('xxxxx.key')
-      expiresIn: '1800', // https://github.com/vercel/ms
+      expiresIn: 2 * 60 * 60, // https://github.com/vercel/ms
     },
+    statusCode: STATUS_CODE,
   } as MidwayConfig;
 };
