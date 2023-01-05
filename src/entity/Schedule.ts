@@ -23,14 +23,20 @@ export class Schedule extends Base {
   sourceId: string;
 
   @Column({
+    field: 'job_id',
+    comment: 'bull job id',
+  })
+  jobId: string;
+
+  @Column({
     comment: '定时器功能作用',
   })
   action: string;
 
   @Column({
-    comment: '定时器类型',
+    comment: '定时器类型,0:默认定时器,1:前端展示,2:间隔定时器',
   })
-  type: string;
+  type: number;
 
   @Column({
     field: 'time_offsets',

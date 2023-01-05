@@ -48,14 +48,13 @@ export class ScheduleService extends BaseService {
     if (obj.id) {
       data = await this.update(obj);
     } else {
-      console.log('obj :>>', obj);
       data = await this.addSchedule(obj);
     }
     return data;
   }
   async setSchedule(obj) {
     const jobId = await this.queueJobService.replaceQueueJob(obj);
-    obj.sourceId = jobId;
+    obj.jobId = jobId;
     const data = await this.saveSchedule(obj);
     return this.resultData(data);
   }
@@ -68,6 +67,7 @@ export class ScheduleService extends BaseService {
     await this.delete({ id });
     return this.resultData();
   }
+  // 项目启动时加载所有定时器
   async loadSchedule() {
     const scheduleList = await this.getList();
     for (const schedule of scheduleList) {

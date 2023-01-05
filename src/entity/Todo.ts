@@ -21,7 +21,7 @@ export class Todo extends Base {
 
   @Column({
     field: 'cycle_value',
-    comment: '循环数值',
+    comment: '重复间隔数值',
   })
   cycleValue: number;
   @Column({

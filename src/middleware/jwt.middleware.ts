@@ -74,7 +74,8 @@ export class JwtMiddleware {
       ctx.path === '/user/getPublicKey' ||
       ctx.path === '/user/signIn' ||
       ctx.path === '/user/signUp' ||
-      ctx.path === '/user/logout'
+      ctx.path === '/user/logout'||
+      ctx.path === '/queueJob/addQueueJob'
     );
   }
 }

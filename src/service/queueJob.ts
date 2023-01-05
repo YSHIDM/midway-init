@@ -9,15 +9,13 @@ export class QueueJobService {
   @Inject()
   scheduleService: ScheduleService;
 
-  async replaceQueueJob({ id, action: queueName, cron, jobId, ...data }) {
+  async replaceQueueJob({ name, action: queueName, cron, jobId, ...data }) {
     const testQueue = this.bullFramework.getQueue(queueName);
-    if (id) {
+    if (jobId) {
       await testQueue.removeJobs(jobId);
     }
-    const job = await testQueue?.add(data, {
-      repeat: {
-        cron: cron,
-      },
+    const job = await testQueue?.add(name, data, {
+      repeat: { cron },
     });
     return job.id;
   }

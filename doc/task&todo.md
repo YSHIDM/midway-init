@@ -8,6 +8,8 @@
 | ---- | ---- | ---- | -------- | -------- | ------- | ------- | ------ |
 | todo | -    | -    | number/s | number/s | boolean | boolean | 硬删除 |
 
+添加间隔执行状态
+
 ```js
 import cron from 'cron-validate'
 ```
@@ -31,10 +33,34 @@ import cron from 'cron-validate'
 
 什么时候关闭
 定时器通过socket提醒后，按重复间隔增加定时提醒（1），如果关闭则删除重复间隔定时器。
-定时器来源id 为task id。
+（1）定时器来源id 为task/todo id。
 
 什么是间隔提醒
 例如打卡提醒，没有完成（关闭）则间隔提醒，
 
 什么是持续时间
 todo完成倒计时时间，前端可以根据记录进行倒计时，也可以自定义倒计时。
+
+|名称|来源id|功能|类型|偏移|cron|接收人|状态|描述|排序|
+|-|-|-|-|-|-|-|-|-|-|
+|-|-|-|-|-|-|-|-|-|-|
+
+定时器 与 job 的关系
+jobId = job.id
+action = queueName
+sourceId = (taskId\todoId)
+
+task、todo 与定时器的关系
+    name
+    jobId = job.id *
+    action = queueName
+    sourceId = (taskId\todoId)
+    cron = tCron
+    cron触发后按重复间隔增加定时提醒。
+    t: (s1-j1,s2-j2/5) 删除s2
+    s1 s2: sourceId type=0
+    : cron(s2 = s1分+t持续时间)
+    : action 是什么？TASK、TODO？queue execute socket:要做{data}
+    : 需要区分 提醒 与 间隔提醒
+
+task、todo 与 job的关系

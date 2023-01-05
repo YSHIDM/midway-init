@@ -97,7 +97,7 @@ export class BaseService {
    */
   async update(obj) {
     // TODO: 修改人
-    obj.modifier = this.ctx.state.user.nickname;
+    // obj.modifier = this.ctx.state.user.nickname;
     return this.model
       .update(obj, {
         where: {
