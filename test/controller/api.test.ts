@@ -1,6 +1,5 @@
 import { createApp, close, createHttpRequest } from "@midwayjs/mock";
-import { Framework } from "@midwayjs/web";
-import { Application } from "egg";
+import { Application, Framework } from "@midwayjs/koa";
 
 describe("test/controller/api.test.ts", () => {
   let app: Application;

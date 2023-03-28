@@ -1,7 +1,6 @@
 import { createApp, close } from '@midwayjs/mock'
 import { createSocketIOClient } from '@midwayjs/mock';
-import { Framework } from '@midwayjs/web';
-import { Application } from "egg";
+import { Application, Framework } from '@midwayjs/koa';
 // import { once } from 'events';
 
 describe('/test/index.test.ts', () => {

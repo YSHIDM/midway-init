@@ -10,7 +10,7 @@ import {
 // import { Application as SocketApplication } from '@midwayjs/socketio';
 // import { CacheManager } from '@midwayjs/cache';
 // import { CommonService } from '../service/common';
-// import { Context } from 'egg';
+// import { Context } from '@midwayjs/koa';
 // import { RedisService } from '@midwayjs/redis';
 import { TaskService } from '../service/task';
 // import { Application } from '@midwayjs/web';

@@ -54,7 +54,7 @@ export class TodoService extends BaseService {
     const offset = (currentPage - 1) * pageSize;
     let where = { ...filter }
 
-    let data = await Todo.findAndCountAll({
+    let data = await this.model.findAndCountAll({
       where,
       limit: pageSize,
       offset,

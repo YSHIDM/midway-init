@@ -1,4 +1,4 @@
-import { Context } from '@midwayjs/web';
+import { Context } from '@midwayjs/koa';
 import { customAlphabet } from 'nanoid';
 import { Inject, Provide } from '@midwayjs/decorator';
 import { Op } from 'sequelize';

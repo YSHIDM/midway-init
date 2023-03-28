@@ -1,6 +1,6 @@
 
 import { Body, Controller, Inject, Post } from '@midwayjs/decorator';
-// import { Context } from 'egg';
+// import { Context } from '@midwayjs/koa';
 import { SpaceService } from '../service/space';
 // import { CacheManager } from '@midwayjs/cache';
 // import { RedisService } from '@midwayjs/redis';

@@ -1,5 +1,5 @@
 import { Config, Inject, Middleware } from '@midwayjs/decorator';
-import { Context, NextFunction } from '@midwayjs/web';
+import { Context, NextFunction } from '@midwayjs/koa';
 import { JwtService } from '@midwayjs/jwt';
 import { UserService } from '../service/user';
 
@@ -74,7 +74,7 @@ export class JwtMiddleware {
       ctx.path === '/user/getPublicKey' ||
       ctx.path === '/user/signIn' ||
       ctx.path === '/user/signUp' ||
-      ctx.path === '/user/logout'||
+      ctx.path === '/user/logout' ||
       ctx.path === '/queueJob/addQueueJob'
     );
   }

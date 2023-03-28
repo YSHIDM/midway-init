@@ -1,5 +1,5 @@
 import { Inject, Controller, Post, Query, Get, Param } from '@midwayjs/decorator';
-import { Context } from 'egg';
+import { Context } from '@midwayjs/koa';
 import { IGetUserResponse } from '../interface';
 import { RabbitmqService } from '../service/rabbitmq';
 import { UserService } from '../service/user';

@@ -4,7 +4,7 @@ import { Task } from '../entity/Task';
 import { Inject, Provide } from '@midwayjs/decorator';
 import { Op } from 'sequelize';
 import { RedisService } from '@midwayjs/redis';
-import { Context } from '@midwayjs/web';
+import { Context } from '@midwayjs/koa';
 // import { RedisServiceFactory } from '@midwayjs/redis';
 // import { ITask } from '../interface';
 
@@ -38,7 +38,7 @@ export class TaskService extends BaseService {
     }];
     console.log('this.ctx :>>', this.ctx)
     obj.creator = 'YSHI';
-    return await Task.create(obj).then(d => d.toJSON());
+    return await this.model.create(obj).then(d => d.toJSON());
   }
 
   async saveTask(obj) {
@@ -89,7 +89,7 @@ export class TaskService extends BaseService {
       }
     }
 
-    let data = await Task.findAndCountAll({
+    let data = await this.model.findAndCountAll({
       where,
       limit: pageSize,
       offset,
@@ -131,7 +131,7 @@ export class TaskService extends BaseService {
       testing: 'done',
     };
     let where = {};
-    const task = await Task.findByPk(id, { raw: true }); // this.byPk(id)
+    const task = await this.model.findByPk(id, { raw: true }); // this.byPk(id)
 
     if (!nextNode[task.node]) {
       return { code: 8000, data: null };

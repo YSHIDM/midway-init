@@ -2,7 +2,7 @@ import * as bull from '@midwayjs/bull';
 import * as bullBoard from '@midwayjs/bull-board';
 import * as cache from '@midwayjs/cache';
 import * as crossDomain from '@midwayjs/cross-domain';
-import * as egg from '@midwayjs/web';
+import * as web from '@midwayjs/web';
 import * as info from '@midwayjs/info';
 import * as jwt from '@midwayjs/jwt';
 import * as rabbitmq from '@midwayjs/rabbitmq';
@@ -10,8 +10,6 @@ import * as redis from '@midwayjs/redis';
 import * as sequelize from '@midwayjs/sequelize';
 import * as socketio from '@midwayjs/socketio';
 import { App, Configuration } from '@midwayjs/decorator';
-import { Application } from 'egg';
-// import { AuthenticationMiddleware } from './middleware/AuthenticationMiddleware';
 import { ILifeCycle, Inject } from '@midwayjs/core';
 import { join } from 'path';
 // import { JwtMiddleware } from './middleware/jwt.middleware';
@@ -20,7 +18,7 @@ import { join } from 'path';
 
 @Configuration({
   imports: [
-    egg,
+    web,
     bull,
     bullBoard,
     redis,
@@ -36,7 +34,7 @@ import { join } from 'path';
 })
 export class ContainerLifeCycle implements ILifeCycle {
   @App()
-  app: Application;
+  app: web.Application;
   @Inject()
   bullFramework: bull.Framework;
   // @App('bull')

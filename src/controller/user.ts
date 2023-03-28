@@ -1,8 +1,8 @@
-import { Application as SocketApplication } from '@midwayjs/socketio';
+// import { Application as SocketApplication } from '@midwayjs/socketio';
 import { Application } from '@midwayjs/web';
 import { CacheManager } from '@midwayjs/cache';
 import { CommonService } from '../service/common';
-import { Context } from 'egg';
+import { Context } from '@midwayjs/koa';
 import { RedisService } from '@midwayjs/redis';
 import { UserService } from '../service/user';
 import {
@@ -12,7 +12,7 @@ import {
   Controller,
   Get,
   Inject,
-  MidwayFrameworkType,
+  // MidwayFrameworkType,
   Post,
 } from '@midwayjs/decorator';
 
@@ -22,8 +22,8 @@ export class UserController {
   app: Application;
   @Inject()
   ctx: Context;
-  @App(MidwayFrameworkType.WS_IO)
-  socketApp: SocketApplication;
+  // @App(MidwayFrameworkType.WS_IO)
+  // socketApp: SocketApplication;
   @Inject()
   userService: UserService;
   @Inject()
@@ -38,7 +38,7 @@ export class UserController {
   @Get()
   async invoke() {
     // 对 / 下的连接做广播
-    this.socketApp.of('/').emit('hi', 'everyone');
+    // this.socketApp.of('/').emit('hi', 'everyone');
   }
   @Get('/get/:uid')
   async getUser() {

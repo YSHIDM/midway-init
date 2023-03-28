@@ -1,7 +1,7 @@
 import { BaseService } from './base';
 import { CommonService } from './common';
 import { Config, Inject, Provide } from '@midwayjs/decorator';
-import { Context } from '@midwayjs/web';
+// import { Context } from '@midwayjs/koa';
 import { IUserOptions } from '../interface';
 import { JwtService } from '@midwayjs/jwt';
 import { RabbitmqService } from './rabbitmq';
@@ -17,8 +17,8 @@ export class UserService extends BaseService {
     this.model = User;
   }
 
-  @Inject()
-  ctx: Context;
+  // @Inject()
+  // ctx: Context;
   @Config('jwt')
   jwtConfig;
   @Inject()
@@ -39,7 +39,7 @@ export class UserService extends BaseService {
     obj.id = this.getId('SPC');
     console.log('this.ctx :>>', this.ctx)
     obj.creator = obj.creator || this.ctx.user.nickname;
-    return await User.create(obj).then(d => d.toJSON());
+    return this.model.create(obj).then(d => d.toJSON());
   }
 
   async saveUser(obj) {
