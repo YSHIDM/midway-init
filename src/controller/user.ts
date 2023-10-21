@@ -1,8 +1,7 @@
 // import { Application as SocketApplication } from '@midwayjs/socketio';
-import { Application } from '@midwayjs/web';
 import { CacheManager } from '@midwayjs/cache';
 import { CommonService } from '../service/common';
-import { Context } from '@midwayjs/koa';
+import { Application, Context } from '@midwayjs/koa';
 import { RedisService } from '@midwayjs/redis';
 import { UserService } from '../service/user';
 import {

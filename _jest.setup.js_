@@ -1,0 +1,9 @@
+const path = require('path')
+jest.setTimeout(30000)
+module.exports = {
+  preset: 'ts-jest',
+  testEnvironment: 'node',
+  testPathIgnorePatterns: [path.join(__dirname, '/test/fixtures')],
+  coveragePathIgnorePatterns: [path.join(__dirname, '/test/')],
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],  // 预先读取 jest.setup.js
+}

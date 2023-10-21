@@ -25,7 +25,7 @@ export class GoodsService extends BaseService {
   async addGoods(obj) {
     obj.id = this.getId('GOD');
     obj.creator = 'YSHI';
-    return await Goods.create(obj).then(d => d.toJSON());
+    return await this.model.create(obj).then(d => d.toJSON());
   }
 
   async saveGoods(obj) {
@@ -76,7 +76,7 @@ export class GoodsService extends BaseService {
       // if() {}
     }
 
-    let data = await Goods.findAndCountAll({
+    let data = await this.model.findAndCountAll({
       where,
       limit: pageSize,
       offset,

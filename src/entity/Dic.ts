@@ -5,7 +5,7 @@ import { Base } from './Base';
 
 @Table({
   timestamps: true, // 自动维护时间
-  tableName: 'schedule', // 数据库表名称
+  tableName: 'dic', // 数据库表名称
   freezeTableName: true, // 禁止修改表名，如果不写会把表名自动复数化，goods
 })
 export class Dic extends Base {

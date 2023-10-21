@@ -2,13 +2,14 @@ import * as bull from '@midwayjs/bull';
 import * as bullBoard from '@midwayjs/bull-board';
 import * as cache from '@midwayjs/cache';
 import * as crossDomain from '@midwayjs/cross-domain';
-import * as web from '@midwayjs/web';
 import * as info from '@midwayjs/info';
 import * as jwt from '@midwayjs/jwt';
+import * as koa from '@midwayjs/koa';
 import * as rabbitmq from '@midwayjs/rabbitmq';
 import * as redis from '@midwayjs/redis';
 import * as sequelize from '@midwayjs/sequelize';
 import * as socketio from '@midwayjs/socketio';
+import * as upload from '@midwayjs/upload';
 import { App, Configuration } from '@midwayjs/decorator';
 import { ILifeCycle, Inject } from '@midwayjs/core';
 import { join } from 'path';
@@ -18,7 +19,7 @@ import { join } from 'path';
 
 @Configuration({
   imports: [
-    web,
+    koa,
     bull,
     bullBoard,
     redis,
@@ -29,12 +30,13 @@ import { join } from 'path';
     info,
     crossDomain,
     rabbitmq,
+    upload,
   ],
   importConfigs: [join(__dirname, './config')],
 })
 export class ContainerLifeCycle implements ILifeCycle {
   @App()
-  app: web.Application;
+  app: koa.Application;
   @Inject()
   bullFramework: bull.Framework;
   // @App('bull')
@@ -45,6 +47,7 @@ export class ContainerLifeCycle implements ILifeCycle {
     // console.log(111111, 'onReady');
     // // 在这个阶段，装饰器队列还未创建，使用 API 提前手动创建队列，装饰器会复用同名队列
     // const queue = this.bullFramework.createQueue('test2');
+    // console.log('queue.name :>>', queue)
     // // 通过队列手动执行清理
     // await queue.obliterate({ force: true });
     // // queue.process(data => console.log('data123 :>>', data.data));

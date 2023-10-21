@@ -6,7 +6,9 @@ import {
   CreatedAt,
   UpdatedAt,
 } from 'sequelize-typescript'
-
+import { CONSTANT } from '../constant/CONSTANT'
+/** 空字符串 */
+export const E = CONSTANT.EMPTY
 @Table
 export class Base extends Model {
   @Column({

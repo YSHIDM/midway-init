@@ -1,0 +1,34 @@
+# doc/http/文件.http
+
+@host = http://127.0.0.1:7002
+@multipart = multipart/form-data; boundary=----xxxxxxxxxxxxxxxxxxxxxx
+# @auth = 123
+# Authorization: {{auth}}
+# content-type: application/json
+
+### 上传文件
+
+POST {{host}}/file/upload HTTP/1.1
+Content-Type: {{multipart}}
+
+------xxxxxxxxxxxxxxxxxxxxxx
+Content-Disposition: form-data; name="name"
+
+123.txt
+------xxxxxxxxxxxxxxxxxxxxxx
+Content-Disposition: form-data; name="files"; filename="123.txt"
+
+< ./123.txt
+------xxxxxxxxxxxxxxxxxxxxxx
+Content-Disposition: form-data; name="files"; filename="1.mp3"
+
+< ./1.mp3
+------xxxxxxxxxxxxxxxxxxxxxx--
+
+GET {{host}}/file/getFile
+
+
+
+GET {{host}}/home/tom
+
+

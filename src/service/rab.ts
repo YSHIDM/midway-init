@@ -31,7 +31,7 @@ export class RabbitmqService {
     this.config = Object.assign(
       {
         protocol: 'amqp',
-        hostname: 'localhost',
+        hostname: '49.232.26.20',
         port: 5672,
         username: 'fgc1101',
         password: 'fgc19941030',

@@ -38,12 +38,11 @@ export class HelloSocketController {
       bbb: 2,
     });
     // this.testQueue.addListener('test1', () => console.log(123));
-    await this.testQueue.add(
-      { a: 123 },
-      {
-        repeat: { cron: '0 36 1 * * *' },
-      }
-    );
+    await this.testQueue.add({
+      a: 123
+    }, {
+      repeat: { cron: '0 36 1 * * *' },
+    });
     console.log('123 :>>', 123);
 
     // { repeat: { cron: '15 3 * * *' } }

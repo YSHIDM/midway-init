@@ -13,7 +13,6 @@ import {
 // import { Context } from '@midwayjs/koa';
 // import { RedisService } from '@midwayjs/redis';
 import { TaskService } from '../service/task';
-// import { Application } from '@midwayjs/web';
 @Controller('/task')
 export class UserController {
 

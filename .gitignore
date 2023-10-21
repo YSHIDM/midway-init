@@ -16,3 +16,4 @@ run/
 .vscode
 .history
 src/config/config.local.ts
+midway-init.zip

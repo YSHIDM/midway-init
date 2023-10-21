@@ -1,6 +1,6 @@
 import { IMiddleware } from '@midwayjs/core';
 import { Middleware } from '@midwayjs/decorator';
-import { NextFunction, Context } from '@midwayjs/web';
+import { NextFunction, Context } from '@midwayjs/koa';
 
 @Middleware()
 export class B implements IMiddleware<Context, NextFunction> {
