@@ -1,5 +1,5 @@
 import { Provide } from '@midwayjs/decorator';
-import { Person } from '../entity/person';
+import { Person } from '../entity1/person';
 
 @Provide()
 export class PersonService {

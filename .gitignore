@@ -17,3 +17,4 @@ run/
 .history
 src/config/config.local.ts
 midway-init.zip
+app/upload

@@ -21,6 +21,7 @@
     "@midwayjs/security": "^3.12.5",
     "@midwayjs/sequelize": "^3.12.3",
     "@midwayjs/socketio": "^3.12.3",
+    "@midwayjs/typeorm": "3",
     "@midwayjs/upload": "3.12.5",
     "@midwayjs/web": "^3.12.3",
     "amqp-connection-manager": "^4.1.14",
@@ -33,7 +34,8 @@
     "node-ffprobe": "^3.0.0",
     "pg": "^8.11.3",
     "sequelize": "^6.33.0",
-    "sequelize-typescript": "^2.1.5"
+    "sequelize-typescript": "^2.1.5",
+    "typeorm": "^0.3.17"
   },
   "devDependencies": {
     "@midwayjs/cli": "^2.1.1",

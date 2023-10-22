@@ -1,6 +1,6 @@
 import { BaseService } from '../service/base';
 import { CommonService } from './common';
-import { Goods } from '../entity/Goods';
+import { Goods } from '../entity1/Goods';
 import { Inject, Provide } from '@midwayjs/decorator';
 import { Op } from 'sequelize';
 import { RedisService } from '@midwayjs/redis';

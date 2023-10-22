@@ -1,13 +1,13 @@
-/** 个人物品 */
+/** 定时任务 */
 import { Table, Column } from 'sequelize-typescript';
 import { Base } from './Base';
 
 @Table({
   timestamps: true, // 自动维护时间
-  tableName: 'queue_job', // 数据库表名称
+  tableName: 'schedule', // 数据库表名称
   freezeTableName: true, // 禁止修改表名，如果不写会把表名自动复数化，goods
 })
-export class QueueJob extends Base {
+export class Schedule extends Base {
   // @PrimaryKey
   // id: string;
 
@@ -23,14 +23,20 @@ export class QueueJob extends Base {
   sourceId: string;
 
   @Column({
+    field: 'job_id',
+    comment: 'bull job id',
+  })
+  jobId: string;
+
+  @Column({
     comment: '定时器功能作用',
   })
   action: string;
 
   @Column({
-    comment: '定时器类型',
+    comment: '定时器类型,0:默认定时器,1:前端展示,2:间隔定时器',
   })
-  type: string;
+  type: number;
 
   @Column({
     field: 'time_offsets',

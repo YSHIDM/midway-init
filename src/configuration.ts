@@ -7,12 +7,14 @@ import * as jwt from '@midwayjs/jwt';
 import * as koa from '@midwayjs/koa';
 import * as rabbitmq from '@midwayjs/rabbitmq';
 import * as redis from '@midwayjs/redis';
-import * as sequelize from '@midwayjs/sequelize';
+// import * as sequelize from '@midwayjs/sequelize';
 import * as socketio from '@midwayjs/socketio';
 import * as upload from '@midwayjs/upload';
 import { App, Configuration } from '@midwayjs/decorator';
 import { ILifeCycle, Inject } from '@midwayjs/core';
 import { join } from 'path';
+import * as orm from '@midwayjs/typeorm';
+
 // import { JwtMiddleware } from './middleware/jwt.middleware';
 // import { ScheduleService } from './service/schedule';
 // import { UserService } from './service/user';
@@ -24,13 +26,14 @@ import { join } from 'path';
     bullBoard,
     redis,
     socketio,
-    sequelize,
+    // sequelize,
     cache,
     jwt,
     info,
     crossDomain,
     rabbitmq,
     upload,
+    orm,
   ],
   importConfigs: [join(__dirname, './config')],
 })

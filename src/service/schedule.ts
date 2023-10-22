@@ -1,6 +1,6 @@
 import { Inject, Provide } from '@midwayjs/decorator';
 import { RedisService } from '@midwayjs/redis';
-import { Schedule } from '../entity/Schedule';
+import { Schedule } from '../entity1/Schedule';
 import { BaseService } from './base';
 import { CommonService } from './common';
 import { QueueJobService } from './queueJob';

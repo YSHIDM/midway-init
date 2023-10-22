@@ -7,7 +7,6 @@
 # content-type: application/json
 
 ### 上传文件
-
 POST {{host}}/file/upload HTTP/1.1
 Content-Type: {{multipart}}
 
@@ -25,10 +24,11 @@ Content-Disposition: form-data; name="files"; filename="1.mp3"
 < ./1.mp3
 ------xxxxxxxxxxxxxxxxxxxxxx--
 
+### 获取文件
 GET {{host}}/file/getFile
 
 
-
+### home/tom
 GET {{host}}/home/tom
 
 

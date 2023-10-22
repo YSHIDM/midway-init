@@ -131,7 +131,7 @@ export const write = async (filePath: string, data: string) => promises.writeFil
 export const rename = async (oldPath: string, newPath: string) => promises.rename(oldPath, newPath)
 export const getFileMd5 = async (file: string) => await md5File(file)
 
-export const parseFile = async (file: string, to: string) => {
+export const parseFile = async (file: string, to?: string) => {
   const { dir, base, ext } = path.parse(file)
   let result: any = {
     filename: base,
@@ -148,7 +148,7 @@ export const parseFile = async (file: string, to: string) => {
     result = { ...result, md5 }
   }
   if (['.mp3', '.mp4', '.avi', '.mkv',].includes(ext)) {
-    const probeData = await probe(result.filePath)
+    const probeData = await probe(file)
     if (probeData.error) {
       return getFileInfo(result)
     }

@@ -8,7 +8,7 @@
 //
 import { BaseService } from './base';
 import { CommonService } from './common';
-import { Todo } from '../entity/Todo';
+import { Todo } from '../entity1/Todo';
 import { Inject, Provide } from '@midwayjs/decorator';
 @Provide()
 export class TodoService extends BaseService {

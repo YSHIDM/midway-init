@@ -1,7 +1,7 @@
 import { BaseService } from './base';
 import { CommonService } from './common';
 import { Context } from '@midwayjs/koa';
-import { File } from '../entity/File';
+import { File } from '../entity1/File';
 import { Config, Inject, Provide } from '@midwayjs/decorator';
 import { Op } from 'sequelize';
 import { RedisService } from '@midwayjs/redis';
@@ -31,12 +31,14 @@ export class FileService extends BaseService {
     return await this.model.create(obj).then(d => d.toJSON());
   }
   async upload(files: { filename: string; data: string }[]) {
-    let data = await Promise.all(files.map(async file => {
+    let fileList = await Promise.all(files.map(async file => {
       // const filePath = path.join(this.config.tmpdir, file.filename)
       // file.data.pipe(createWriteStream(filePath))
-      return await parseFile(file.data, this.uploadPath+file.filename)
+      console.log('this.uploadPath+file.filename :>>', this.uploadPath+file.filename)
+      return await parseFile(file.data)
     }))
-    return { code: this.okCode, data };
+    const data = await this.batchAdd(fileList)
+    return { code: this.okCode, data }
   }
   async getFile(query) {
     return { name: '123' }

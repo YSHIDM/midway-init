@@ -6,7 +6,7 @@ import { IUserOptions } from '../interface';
 import { JwtService } from '@midwayjs/jwt';
 import { RabbitmqService } from './rabbitmq';
 import { RedisService } from '@midwayjs/redis';
-import { User } from '../entity/User';
+import { User } from '../entity1/User';
 // import { RedisServiceFactory } from '@midwayjs/redis';
 
 @Provide()

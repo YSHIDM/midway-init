@@ -1,6 +1,6 @@
 import { BaseService } from './base';
 import { CommonService } from './common';
-import { TaskNode } from '../entity/TaskNode';
+import { TaskNode } from '../entity1/TaskNode';
 import { Inject, Provide } from '@midwayjs/decorator';
 import { RedisService } from '@midwayjs/redis';
 

@@ -1,5 +1,10 @@
 # my-midway-project
 
+## TODO
+
+数据库映射已经基本完成
+文件的数据库操作
+
 ## 快速入门
 
 <!-- 在此次添加使用文档 -->
@@ -9,16 +14,16 @@
 ### 本地开发
 
 ```bash
-$ npm i
-$ npm run dev
-$ open http://localhost:7001/
+npm i
+npm run dev
+open http://localhost:7001/
 ```
 
 ### 部署
 
 ```bash
-$ npm start
-$ npm stop
+npm start
+npm stop
 ```
 
 ### 内置指令
