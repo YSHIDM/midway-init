@@ -43,6 +43,9 @@ export class FileService extends BaseService {
   async getFile(query) {
     return { name: '123' }
   }
+  async scanFile(filePath){
+    return await parseFile(filePath)
+  }
 
 
   /**

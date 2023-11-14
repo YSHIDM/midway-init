@@ -111,6 +111,6 @@ export class File extends Base {
   })
   showRecycle: boolean;
 
-  // TODO: 能用吗？
-  isDelete: undefined;
+  // // TODO: 能用吗？
+  // isDelete: undefined;
 }
