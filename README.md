@@ -9,16 +9,16 @@ see [midway docs][midway] for more detail.
 ### Development
 
 ```bash
-$ npm i
-$ npm run dev
-$ open http://localhost:7001/
+npm i
+npm run dev
+open http://localhost:7001/
 ```
 
 ### Deploy
 
 ```bash
-$ npm start
-$ npm stop
+npm start
+npm stop
 ```
 
 ### npm scripts
@@ -26,11 +26,9 @@ $ npm stop
 - Use `npm run lint` to check code style.
 - Use `npm test` to run unit test.
 
-
 [midway]: https://midwayjs.org
 
 queue
-
 
 jod
 
@@ -50,3 +48,10 @@ saveScheduleForMessage
 getPage
 execCallback
 getMaxTimeOffset
+
+## git config
+
+```shell
+git config --global user.name "YSHIDM"
+git config --global user.email "1179082420@qq.com"
+```
