@@ -1,0 +1,7 @@
+{
+  "redisXplorer.config": {
+    "profiles": [],
+    "scanLimit": 200
+  },
+  "bookmarks.useWorkaroundForFormatters": true
+}

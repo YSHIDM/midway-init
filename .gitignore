@@ -13,7 +13,6 @@ run/
 *.un~
 .tsbuildinfo
 .tsbuildinfo.*
-.vscode
 .history
 src/config/config.local.ts
 midway-init.zip
