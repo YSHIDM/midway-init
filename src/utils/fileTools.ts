@@ -17,58 +17,14 @@ const md5File = require('md5-file')
 const probe = require('node-ffprobe')
 import * as dayjs from 'dayjs'
 const crypto = require('crypto')
+const PDFDocument = require('pdf-lib').PDFDocument
 // import async from 'async'
 // import * as util from 'util';
 // import * as gm from 'gm';
 // const ffprobeInstaller = require('@ffprobe-installer/ffprobe')
 // import ffprobeInstaller from '@ffprobe-installer/ffprobe';
 
-
 const { promises } = fs
-// const Mime = require('mime');
-
-//   /**
-//    * 图片压缩临界值,200K,值单位:byte
-//    */
-//   IMAGE_CRITICAL_SIZE: 204800, // 2000 * 1024,
-//   /**
-//    * 按临界值压缩上传图片,移动至存储位置,并返回文件大小
-//    * @param criticalSize 图片压缩临界大小
-//    * @param oldPath 旧地址
-//    * @param newPath 新地址,默认等于 oldPath
-//    */
-//    renameAndGetSize: async (criticalSize=204800, oldPath, newPath = oldPath) => {
-//     newPath = newPath || oldPath;
-//     /*
-//      * 递归创建文件存储位置
-//      */
-//     let { size } = await promises.stat(oldPath);
-//     if (size > criticalSize) {
-//       try {
-//         await gm(oldPath)
-//           .setFormat('JPEG')
-//           .quality(20) // 设置压缩质量: 0-100
-//           .strip()
-//           .autoOrient()
-//           .writePromise(newPath);
-//       } catch (error) {
-//         console.error(error);
-//         throw {
-//           code: 4000,
-//           // msg: `${path.basename(newPath)} 图片压缩失败，可尝试修改图片再上传`,
-//           data: null,
-//         };
-//       }
-//       size = (await promises.stat(newPath)).size;
-//     }
-//     return {
-//       code: 2000,
-//       msg: null,
-//       data: {
-//         size,
-//       },
-//     };
-//   },
 
 /**
  * 获取文件大小
@@ -133,37 +89,53 @@ export const getFileMd5 = async (file: string) => await md5File(file)
 
 export const parseFile = async (file: string, to?: string) => {
   const { dir, base, ext } = path.parse(file)
+  const _ext = ext.toLowerCase()
+  let data
+  if (to) {
+    const { size, md5, filePath } = await moveFile(file, to)
+    data = { size, md5, filePath }
+    file = filePath
+  } else {
+    // const size = await getSize(file)
+    const md5 = await getFileMd5(file)
+    data = { md5 }
+  }
+  if (['.mp3', '.mp4', '.avi', '.mkv',].includes(_ext)) {
+    data = await parseMp3Mp4(file)
+  } else if (_ext === '.pdf') {
+    data = await parsePdf(file)
+  }
+  data.size = data.size || await getSize(file)
+  // data.tags = getBaseTags
   let result: any = {
     filename: base,
     lowerName: base.toLowerCase(),
     filePath: dir,
-
-  }
-  if (to) {
-    const { size, md5, filePath } = await moveFile(file, to)
-    result = { ...result, size, md5, filePath }
-  } else {
-    // const size = await getSize(file)
-    const md5 = await getFileMd5(file)
-    result = { ...result, md5 }
-  }
-  if (['.mp3', '.mp4', '.avi', '.mkv',].includes(ext)) {
-    const probeData = await probe(file)
-    if (probeData.error) {
-      return getFileInfo(result)
-    }
-    const { duration, size, tags, } = probeData.format
-    return getFileInfo({
-      duration,
-      size,
-      title: tags?.title,
-      artist: tags?.artist,
-      ...result
-    })
-  } else if (ext === '') {
-    console.log('result :>>', result)
+    ext,
+    ...data,
   }
   return getFileInfo(result)
+}
+const parseMp3Mp4 = async file => {
+  const probeData = await probe(file)
+  if (probeData.error) {
+    return {}
+  }
+  const { duration, size, tags, } = probeData.format
+  return {
+    duration,
+    size,
+    title: tags?.title,
+    artist: tags?.artist,
+  }
+}
+const parsePdf = async file => {
+  const pdfBuffer = await promises.readFile(file);
+  const pdfDoc = await PDFDocument.load(pdfBuffer)
+  const pageSize = pdfDoc.getPages().length;
+  return {
+    pageSize
+  }
 }
 
 const getFileInfo = file => {
@@ -248,3 +220,48 @@ export const moveFile = async (from: string, to: string) => {
     filePath: to,
   }
 }
+
+// const Mime = require('mime');
+
+//   /**
+//    * 图片压缩临界值,200K,值单位:byte
+//    */
+//   IMAGE_CRITICAL_SIZE: 204800, // 2000 * 1024,
+//   /**
+//    * 按临界值压缩上传图片,移动至存储位置,并返回文件大小
+//    * @param criticalSize 图片压缩临界大小
+//    * @param oldPath 旧地址
+//    * @param newPath 新地址,默认等于 oldPath
+//    */
+//    renameAndGetSize: async (criticalSize=204800, oldPath, newPath = oldPath) => {
+//     newPath = newPath || oldPath;
+//     /*
+//      * 递归创建文件存储位置
+//      */
+//     let { size } = await promises.stat(oldPath);
+//     if (size > criticalSize) {
+//       try {
+//         await gm(oldPath)
+//           .setFormat('JPEG')
+//           .quality(20) // 设置压缩质量: 0-100
+//           .strip()
+//           .autoOrient()
+//           .writePromise(newPath);
+//       } catch (error) {
+//         console.error(error);
+//         throw {
+//           code: 4000,
+//           // msg: `${path.basename(newPath)} 图片压缩失败，可尝试修改图片再上传`,
+//           data: null,
+//         };
+//       }
+//       size = (await promises.stat(newPath)).size;
+//     }
+//     return {
+//       code: 2000,
+//       msg: null,
+//       data: {
+//         size,
+//       },
+//     };
+//   },
