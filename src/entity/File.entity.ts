@@ -66,6 +66,12 @@ export class File extends Base {
   artist: string;
 
   @Column({
+    name: 'pageize',
+    comment: '页数',
+  })
+  pageSize: number;
+
+  @Column({
     comment: '散列值',
   })
   md5: string;
