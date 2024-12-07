@@ -1,0 +1,20 @@
+
+@host = http://127.0.0.1:7002
+@multipart = multipart/form-data; boundary=----xxxxxxxxxxxxxxxxxxxxxx
+
+### Tree
+POST {{host}}/api/Tree
+Content-Type: application/json
+
+{
+  "parentId": "tree1121",
+  "id": "tree1100"
+}
+### Tag
+POST {{host}}/api/Tree
+Content-Type: application/json
+
+{
+  "parentId": "tree1000",
+  "id": "tag1000"
+}

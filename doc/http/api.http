@@ -1,0 +1,9 @@
+# doc/http/文件.http
+
+@host = http://127.0.0.1:7002
+@multipart = multipart/form-data; boundary=----xxxxxxxxxxxxxxxxxxxxxx
+# @auth = 123
+# Authorization: {{auth}}
+# content-type: application/json
+### testDB
+GET {{host}}/api/test

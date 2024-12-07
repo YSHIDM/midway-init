@@ -1,19 +1,19 @@
 import { Inject, Provide } from '@midwayjs/decorator';
 import { RedisService } from '@midwayjs/redis';
-import { Schedule } from '../entity1/Schedule';
 import { BaseService } from './base';
 import { CommonService } from './common';
 import { QueueJobService } from './queueJob';
+import { Schedule } from '../entity';
 
 // import { RedisServiceFactory } from '@midwayjs/redis';
 // import { IGoods } from '../interface';
 
 @Provide()
-export class ScheduleService extends BaseService {
-  model;
-  constructor() {
+export class ScheduleService extends BaseService<Schedule> {
+  // model;
+  constructor () {
     super();
-    this.model = Schedule;
+    // this.model = Schedule;
   }
   @Inject()
   redisSvc: RedisService;
@@ -34,7 +34,7 @@ export class ScheduleService extends BaseService {
     obj.id = this.getId('SDR');
     obj.state = 1;
     obj.creator = 'YSHI';
-    return this.model.create(obj).then(d => d.toJSON());
+    return this.model.save(obj)
   }
 
   // service
@@ -133,13 +133,11 @@ export class ScheduleService extends BaseService {
       unit: 'day',
       state: 1,
     };
-    timeOffsets.forEach(
-      (timeOffset: { num: number; unit: Unit; state: number }) => {
-        if (timeOffset.state === 1 && maxTimeOffset.num < timeOffset.num) {
-          maxTimeOffset = timeOffset;
-        }
+    timeOffsets.forEach((timeOffset: { num: number; unit: Unit; state: number }) => {
+      if (timeOffset.state === 1 && maxTimeOffset.num < timeOffset.num) {
+        maxTimeOffset = timeOffset;
       }
-    );
+    });
     return maxTimeOffset;
   }
 

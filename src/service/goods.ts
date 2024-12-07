@@ -1,18 +1,18 @@
 import { BaseService } from '../service/base';
 import { CommonService } from './common';
-import { Goods } from '../entity1/Goods';
+import { Goods } from '../entity';
 import { Inject, Provide } from '@midwayjs/decorator';
-import { Op } from 'sequelize';
+
 import { RedisService } from '@midwayjs/redis';
 // import { RedisServiceFactory } from '@midwayjs/redis';
 // import { IGoods } from '../interface';
 
 @Provide()
-export class GoodsService extends BaseService {
-  model;
-  constructor() {
+export class GoodsService extends BaseService<Goods> {
+  // model;
+  constructor () {
     super();
-    this.model = Goods;
+    // this.model = Goods;
   }
   @Inject()
   redisSvc: RedisService;
@@ -25,7 +25,7 @@ export class GoodsService extends BaseService {
   async addGoods(obj) {
     obj.id = this.getId('GOD');
     obj.creator = 'YSHI';
-    return await this.model.create(obj).then(d => d.toJSON());
+    return await this.model.save(obj)
   }
 
   async saveGoods(obj) {
@@ -49,26 +49,18 @@ export class GoodsService extends BaseService {
     const data = await this.byPk(id);
     return { code: this.okCode, data };
   }
-  async getPage({
-    search = '',
-    filter = {},
-    pageSize = 10,
-    currentPage = 1,
-  }: {
-    search?: string;
-    filter?: any;
-    pageSize?: number;
-    currentPage: number;
-    type: string;
+  async getPage({ search = '', filter = {}, pageSize = 10, currentPage = 1, }: {
+    search?: string; filter?: any; pageSize?: number; currentPage: number; type: string;
   }) {
-    const offset = (currentPage - 1) * pageSize;
+    const skip = (currentPage - 1) * pageSize;
+
     let where = {};
     if (search) {
-      where = {
-        name: {
-          [Op.like]: `%${search}%`,
-        },
-      };
+    //   where = {
+    //     name: {
+    //       [Op.like]: `%${search}%`,
+    //     },
+    //   };
     }
     if (filter) {
       // const { } = filter;
@@ -76,12 +68,13 @@ export class GoodsService extends BaseService {
       // if() {}
     }
 
-    let data = await this.model.findAndCountAll({
+    let data = await this.model.findAndCount({
+
       where,
-      limit: pageSize,
-      offset,
-      order: [['updatedAt', 'DESC']],
-      distinct: true, // 去除从表数据行数
+      take: pageSize,
+      skip,
+      // order: [['updatedAt', 'DESC']],
+      // distinct: true, // 去除从表数据行数
     }).then(this.commonSvc.getPageHandler(pageSize, currentPage));
     if (!data) {
       data = { rows: [], count: 0, currentPage, totalPages: 0 };

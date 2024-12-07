@@ -1,22 +1,22 @@
 import { BaseService } from './base';
 import { CommonService } from './common';
-import { Task } from '../entity1/Task';
+import { Task } from '../entity';
 import { Inject, Provide } from '@midwayjs/decorator';
 import { Op } from 'sequelize';
 import { RedisService } from '@midwayjs/redis';
-import { Context } from '@midwayjs/koa';
+// import { Context } from '@midwayjs/koa';
 // import { RedisServiceFactory } from '@midwayjs/redis';
 // import { ITask } from '../interface';
 
 @Provide()
-export class TaskService extends BaseService {
-  model;
-  constructor() {
+export class TaskService extends BaseService<Task> {
+  // model;
+  constructor () {
     super();
-    this.model = Task;
+    // this.model = Task;
   }
-  @Inject()
-  ctx: Context;
+  // @Inject()
+  // ctx: Context;
   @Inject()
   redisSvc: RedisService;
   @Inject()
@@ -38,7 +38,7 @@ export class TaskService extends BaseService {
     }];
     console.log('this.ctx :>>', this.ctx)
     obj.creator = 'YSHI';
-    return await this.model.create(obj).then(d => d.toJSON());
+    return await this.model.save(obj)
   }
 
   async saveTask(obj) {
@@ -64,7 +64,7 @@ export class TaskService extends BaseService {
     pageSize = 10,
     currentPage = 1,
   }) {
-    const offset = (currentPage - 1) * pageSize;
+    const skip = (currentPage - 1) * pageSize;
     let where = {};
     if (search) {
       where = {
@@ -89,12 +89,12 @@ export class TaskService extends BaseService {
       }
     }
 
-    let data = await this.model.findAndCountAll({
+    let data = await this.model.findAndCount({
       where,
-      limit: pageSize,
-      offset,
-      order: [['updatedAt', 'DESC']],
-      distinct: true, // 去除从表数据行数
+      take: pageSize,
+      skip,
+      // order: [['updatedAt', 'DESC']],
+      // distinct: true, // 去除从表数据行数
     }).then(this.commonSvc.getPageHandler(pageSize, currentPage));
     if (!data) {
       data = { rows: [], count: 0, currentPage, totalPages: 0 };
@@ -131,7 +131,7 @@ export class TaskService extends BaseService {
       testing: 'done',
     };
     let where = {};
-    const task = await this.model.findByPk(id, { raw: true }); // this.byPk(id)
+    const task = await this.model.findOneBy({ id })
 
     if (!nextNode[task.node]) {
       return { code: 8000, data: null };

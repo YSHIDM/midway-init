@@ -1,10 +1,10 @@
 // 字典：中文标题与英文标志对照表，建议id = DIC + name + 随机字符串
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm'
 import { Base } from './Base.entity'
-import { Doc } from './Doc.entity'
+import { Directory } from './Directory.entity'
 
 @Entity()
-export class Dic extends Base {
+export class Dictionary extends Base {
 
   @Column({
     comment: '字典名称-英文',
@@ -16,10 +16,10 @@ export class Dic extends Base {
   })
   title: string
 
-  @ManyToOne(() => Doc, doc => doc.docs)
-  @JoinColumn({ name: 'dic_id' })
+  @ManyToOne(() => Directory, directory => directory.dictionarys)
+  @JoinColumn({ name: 'directory_id' })
   // 字典
-  doc: Doc;
+  directory: Directory;
 
   @Column({
     comment: '排序',

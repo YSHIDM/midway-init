@@ -1,21 +1,22 @@
 import { Context } from '@midwayjs/koa';
 import { customAlphabet } from 'nanoid';
 import { Inject, Provide } from '@midwayjs/decorator';
-import { Op } from 'sequelize';
-import { RedisService } from '@midwayjs/redis';
+// import { RedisService } from '@midwayjs/redis';
+import { Repository } from 'typeorm';
+import { Base } from '../entity/Base.entity';
 
 
 @Provide()
-export class BaseService {
-  model; // 继承
+export class BaseService<T extends Base> {
+  model: Repository<T>; // 继承
   okCode: 2000;
-  constructor() {
+  constructor () {
     this.okCode = 2000;
   }
   @Inject()
   ctx: Context;
-  @Inject()
-  redisService: RedisService;
+  // @Inject()
+  // redisService: RedisService;
 
   /**
    * 获取一个 id
@@ -36,7 +37,7 @@ export class BaseService {
   getId(prefix) {
     return this.getCode(
       '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_'
-    )(prefix);
+    )(prefix, 20);
   }
   /**
    * 批量新增
@@ -44,18 +45,16 @@ export class BaseService {
    * @return {Promise<any[]>} 批量保存的数据
    */
   async batchAdd(objArray) {
-    return await this.model
-      .bulkCreate(objArray)
-      .then(data => data.map(d => d.toJSON()));
+    return await this.model.insert(objArray)
   }
 
   /**
    * 按 id 查询
    * @param {string} id 主键
-   * @return {Promise<any>} model数据
+   * @return {Promise<T>} model数据
    */
   byPk(id) {
-    return this.model.findByPk(id);
+    return this.model.findOneBy({ id });
   }
   /**
    * 按条件查询数据
@@ -63,7 +62,7 @@ export class BaseService {
    * @return {Promise<any>} model数据
    */
   async getData(where = void 0) {
-    return this.model.findOne({ where, raw: true });
+    return this.model.findOneBy(where);
   }
   /**
    * 按条件查询数据列表
@@ -72,23 +71,23 @@ export class BaseService {
    * @return {Promise<any[]>} model数据列表
    */
   async getList(where = void 0, extraOptions = void 0): Promise<any[]> {
-    const order = [];
-    if (extraOptions) {
-      const { sort } = extraOptions;
-      if (sort) {
-        order.push(sort);
-      }
-    }
-    order.push(['updatedAt', 'DESC']);
+    // const order = [];
+    // if (extraOptions) {
+    //   const { sort } = extraOptions;
+    //   if (sort) {
+    //     order.push(sort);
+    //   }
+    // }
+    // order.push(['updatedAt', 'DESC']);
     const query = {
       where: undefined,
-      raw: true,
-      order,
+      // raw: true,
+      // order,
     };
     if (where) {
       query.where = where;
     }
-    return this.model.findAll(query);
+    return this.model.find(query);
   }
   /**
    * 修改记录
@@ -99,15 +98,9 @@ export class BaseService {
     // TODO: 修改人
     // obj.modifier = this.ctx.state.user.nickname;
     return this.model
-      .update(obj, {
-        where: {
-          id: {
-            [Op.eq]: obj.id,
-          },
-        },
-        // individualHooks: true,
-        returning: true,
-      })
+      .update({
+        id: obj.id
+      }, obj)
       .then(ds => ds[1].map(i => i.toJSON())[0]);
   }
   /**
@@ -119,7 +112,7 @@ export class BaseService {
     if (!where || Object.keys(where).length === 0) {
       return 0;
     }
-    return this.model.destroy({ where });
+    return this.model.delete(where);
   }
   resultData(data?, code = this.okCode) {
     return { code, data };
@@ -159,3 +152,12 @@ export class BaseService {
   //   await this.cache.reset(); // 清空对应 store 的内容
   // }
 }
+
+// type Obj = {
+//   id: string;
+//   desc: string;
+//   creator: string;
+//   createdAt: Date;
+//   modifier: string;
+//   updatedAt: Date;
+// };

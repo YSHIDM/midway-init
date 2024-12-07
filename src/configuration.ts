@@ -5,7 +5,7 @@ import * as crossDomain from '@midwayjs/cross-domain';
 import * as info from '@midwayjs/info';
 import * as jwt from '@midwayjs/jwt';
 import * as koa from '@midwayjs/koa';
-import * as rabbitmq from '@midwayjs/rabbitmq';
+// import * as rabbitmq from '@midwayjs/rabbitmq';
 import * as redis from '@midwayjs/redis';
 // import * as sequelize from '@midwayjs/sequelize';
 import * as socketio from '@midwayjs/socketio';
@@ -14,6 +14,9 @@ import { App, Configuration } from '@midwayjs/decorator';
 import { ILifeCycle, Inject } from '@midwayjs/core';
 import { join } from 'path';
 import * as orm from '@midwayjs/typeorm';
+import * as ws from '@midwayjs/ws';
+
+require('events').EventEmitter.defaultMaxListeners = 20
 
 // import { JwtMiddleware } from './middleware/jwt.middleware';
 // import { ScheduleService } from './service/schedule';
@@ -31,9 +34,10 @@ import * as orm from '@midwayjs/typeorm';
     jwt,
     info,
     crossDomain,
-    rabbitmq,
+    // rabbitmq,
     upload,
     orm,
+    ws,
   ],
   importConfigs: [join(__dirname, './config')],
 })

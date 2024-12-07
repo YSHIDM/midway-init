@@ -1,19 +1,18 @@
 import { BaseService } from '../service/base';
 import { CommonService } from './common';
-import { Goods } from '../entity1/Goods';
+import { Space } from '../entity';
 import { Inject, Provide } from '@midwayjs/decorator';
 import { Op } from 'sequelize';
 import { RedisService } from '@midwayjs/redis';
-import { Space } from '../entity1/Space';
 // import { RedisServiceFactory } from '@midwayjs/redis';
 // import { ISpace } from '../interface';
 
 @Provide()
-export class SpaceService extends BaseService {
-  model;
+export class SpaceService extends BaseService<Space> {
+  // model;
   constructor() {
     super();
-    this.model = Space;
+    // this.model = Space;
   }
   @Inject()
   redisSvc: RedisService;
@@ -24,9 +23,9 @@ export class SpaceService extends BaseService {
   // redisServiceFactory: RedisServiceFactory;
 
   async addSpace(obj) {
-    obj.id = this.getId('SPC');
-    obj.creator = 'YSHI';
-    return await Space.create(obj).then(d => d.toJSON());
+    // obj.id = this.getId('SPC');
+    // obj.creator = 'YSHI';
+    // return await Space.create(obj).then(d => d.toJSON());
   }
   async deleteSpace(where) {
     return await this.delete(where);
@@ -57,16 +56,16 @@ export class SpaceService extends BaseService {
     return await this.getSpaceWithGoods({ id });
   }
   async getSpaceWithGoods(where) {
-    const data = await Goods.findOne({
-      where,
-      include: [Goods, Space],
-      // [{
-      //   model: Goods,
-      //   required: false, // left join
-      // }],
-      order: [['updatedAt', 'DESC']],
-    }).then(d => d.toJSON());
-    return { code: this.okCode, data };
+    // const data = await Goods.findOne({
+    //   where,
+    //   include: [Goods, Space],
+    //   // [{
+    //   //   model: Goods,
+    //   //   required: false, // left join
+    //   // }],
+    //   order: [['updatedAt', 'DESC']],
+    // }).then(d => d.toJSON());
+    // return { code: this.okCode, data };
   }
   async getPage({
     search = '',
@@ -80,7 +79,7 @@ export class SpaceService extends BaseService {
     currentPage: number;
     type: string;
   }) {
-    const offset = (currentPage - 1) * pageSize;
+    const skip = (currentPage - 1) * pageSize;
     let where = {};
     if (search) {
       where = {
@@ -95,13 +94,13 @@ export class SpaceService extends BaseService {
       // if() {}
     }
 
-    let data = await Space.findAndCountAll({
+    let data = await this.model.findAndCount({
       where,
-      include: [Goods, Space],
-      limit: pageSize,
-      offset,
-      order: [['updatedAt', 'DESC']],
-      distinct: true, // 去除从表数据行数
+      // include: [Goods, Space],
+      take: pageSize,
+      skip,
+      // order: [['updatedAt', 'DESC']],
+      // distinct: true, // 去除从表数据行数
     }).then(this.commonSvc.getPageHandler(pageSize, currentPage));
     if (!data) {
       data = { rows: [], count: 0, currentPage, totalPages: 0 };

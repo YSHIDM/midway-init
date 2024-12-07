@@ -8,14 +8,14 @@
 //
 import { BaseService } from './base';
 import { CommonService } from './common';
-import { Todo } from '../entity1/Todo';
+import { Todo } from '../entity';
 import { Inject, Provide } from '@midwayjs/decorator';
 @Provide()
-export class TodoService extends BaseService {
-  model
+export class TodoService extends BaseService<Todo> {
+  // model
   constructor() {
     super();
-    this.model = Todo
+    // this.model = Todo
   }
   // @Inject()
   // redisSvc: RedisService;
@@ -31,7 +31,7 @@ export class TodoService extends BaseService {
     obj.isAbiding = false
     obj.isArchive = false
     obj.creator = 'YSHI'
-    return this.model.create(obj).then(d => d.toJSON())
+    return this.model.save(obj)
   }
   async saveTodo(obj) {
     let data
@@ -51,15 +51,15 @@ export class TodoService extends BaseService {
     pageSize = 10,
     currentPage = 1
   }) {
-    const offset = (currentPage - 1) * pageSize;
+    const skip = (currentPage - 1) * pageSize;
     let where = { ...filter }
 
-    let data = await this.model.findAndCountAll({
+    let data = await this.model.findAndCount({
       where,
-      limit: pageSize,
-      offset,
-      order: [['updatedAt', 'DESC']],
-      distinct: true, // 去除从表数据行数
+      take: pageSize,
+      skip,
+      // order: [['updatedAt', 'DESC']],
+      // distinct: true, // 去除从表数据行数
     }).then(this.commonSvc.getPageHandler(pageSize, currentPage));
     if (!data) {
       data = { rows: [], count: 0, currentPage, totalPages: 0 };

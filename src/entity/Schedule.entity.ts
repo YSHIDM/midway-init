@@ -33,7 +33,7 @@ export class Schedule extends Base {
 
   @Column({
     name: 'time_offsets',
-    comment: '提醒时间偏移时间，形如：[{"unit":"days","num":1,"state":1}]',
+    comment: '提醒时间偏移时间，可由来源提供，形如：[{"unit":"days","num":1,"state":1}]',
   })
   timeOffsets: string;
 
@@ -43,7 +43,7 @@ export class Schedule extends Base {
   cron: string;
 
   @Column({
-    comment: '消息接收人',
+    comment: '消息接收人，可由来源提供',
   })
   receiver: string;
 

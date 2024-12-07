@@ -1,5 +1,4 @@
-import { createApp, close } from '@midwayjs/mock'
-import { createSocketIOClient } from '@midwayjs/mock';
+import { createApp, close, createSocketIOClient } from '@midwayjs/mock'
 import { Application, Framework } from '@midwayjs/koa';
 // import { once } from 'events';
 

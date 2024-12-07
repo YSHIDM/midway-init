@@ -1,21 +1,57 @@
-// import probe from 'node-ffprobe'
-const probe = require('node-ffprobe')
-// import ffprobeInstaller from '@ffprobe-installer/ffprobe';
-// const ffprobeInstaller = require('@ffprobe-installer/ffprobe')
 
-// console.log(ffprobeInstaller.path, ffprobeInstaller.version)
+import { customAlphabet } from 'nanoid';
+const alphabet = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_'
+const getCode = (prefix: string, length = 20) => {
+  const customNanoid = customAlphabet(alphabet, length - prefix.length);
+  return prefix + customNanoid();
+}
 
-// probe.FFPROBE_PATH = ffprobeInstaller.path
+const arr = [
+  {
+    "id": "tree1100",
+    "name": "1110",
+    "branch": "tree1000"
+  },
+  {
+    "id": "tree1110",
+    "name": "1110",
+    "branch": "tree1000/tree1100"
+  },
+  {
+    "id": "tree1120",
+    "name": "1120",
+    "branch": "tree1000/tree1100"
+  },
+  {
+    "id": "tree1101",
+    "name": "1101",
+    "branch": "tree1000/tree1100"
+  },
+  {
+    "id": "tree1121",
+    "name": "1121",
+    "branch": "tree1000/tree1100/tree1120"
+  },
+  {
+    "id": "tree1122",
+    "name": "1122",
+    "branch": "tree1000/tree1100/tree1120"
+  }
+]
 
-var track = 'doc/1.mp3' // or video
-
-probe(track).then(probeData => {
-  console.log(probeData)
-})
-
-const { customAlphabet } = require('nanoid')
-// import { customAlphabet } from 'nanoid';
-
-const customNanoid = customAlphabet('alphabet', length - 'prefix'.length);
-
-console.log('customNanoid() :>>', customNanoid())
+function copyNodeData(arr, branch = 'tree1000', newBranch = 'tree2000/tree2100') {
+  const idMap = new Map();
+  idMap.set(branch, newBranch)
+  const nodeList = arr.map(node => {
+      const newId = getCode('tree');
+      idMap.set(node.id, newId);
+      return {...node, id: newId };
+  });
+  const regex = new RegExp([...idMap.keys()].join('|'), 'g');
+  nodeList.forEach(node => {
+      node.branch = node.branch.replaceAll(regex, matched => idMap.get(matched));
+  });
+  return nodeList;
+}
+const nodeList = copyNodeData(arr)
+console.log(nodeList)

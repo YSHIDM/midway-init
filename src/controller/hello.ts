@@ -1,7 +1,7 @@
 import { BullQueue, InjectQueue } from '@midwayjs/bull';
 import {
   WSController,
-  OnWSConnection,
+  // OnWSConnection,
   Inject,
   OnWSMessage,
   WSEmit,
@@ -11,8 +11,8 @@ import {
 } from '@midwayjs/decorator';
 import { Context, Application as SocketApplication } from '@midwayjs/socketio';
 
-@Controller('/')
-@WSController('/')
+@Controller('/hello')
+@WSController('/hello')
 export class HelloSocketController {
   @Inject()
   ctx: Context;
@@ -23,10 +23,10 @@ export class HelloSocketController {
   @InjectQueue('test')
   testQueue: BullQueue;
 
-  @OnWSConnection()
-  async onConnectionMethod() {
-    console.log('on client connect', this.ctx.id);
-  }
+  // @OnWSConnection()
+  // async onConnectionMethod() {
+  //   console.log('on client connect---', this.ctx.id);
+  // }
 
   @Get('/2')
   @OnWSMessage('myEvent')

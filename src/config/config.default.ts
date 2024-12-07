@@ -4,9 +4,11 @@ import { STATUS_CODE } from '../constant/STATUS_CODE';
 // import { uploadWhiteList } from '@midwayjs/upload';
 // import { tmpdir } from 'os';
 import { join } from 'path';
-import {
-  Dic, Doc, File, Goods, Person, QueueJob, Schedule, Space, Task, TaskNode, Todo, User
-} from '../entity';
+// import {
+//   Dictionary, Directory, File, Goods, Person, QueueJob, Schedule, Space, Task, TaskNode, Todo, User
+// } from '../entity';
+
+import { entities } from '../entity';
 // import { uploadWhiteList } from '@midwayjs/upload';
 // console.log('midway-upload-files', join(tmpdir(), 'midway-upload-files'))
 
@@ -91,14 +93,15 @@ export default (appInfo: MidwayAppInfo) => {
           database: 'midway_init',
           username: 'postgres',
           password: 'postgres',
-          synchronize: false,     // 如果第一次使用，不存在表，有同步的需求可以写 true，注意会丢数据
-          logging: false,
+          // synchronize: true,     // 如果第一次使用，不存在表，有同步的需求可以写 true，注意会丢数据
+          logging: true,
           // 或者扫描形式
-          entities: [
-            // '**/entity/*.entity{.ts,.js}',
-            // '../entity/*.entity{.ts,.js}'
-            Dic, Doc, File, Goods, Person, QueueJob, Schedule, Space, Task, TaskNode, Todo, User
-          ]
+          entities,
+          // [
+          //   // '**/entity/*.entity{.ts,.js}',
+          //   // '../entity/*.entity{.ts,.js}'
+          //   // Dictionary, Directory, File, Goods, Person, QueueJob, Schedule, Space, Task, TaskNode, Todo, User
+          // ],
           // 配置实体模型
           // entities: [Photo],
         }

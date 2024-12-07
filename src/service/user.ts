@@ -4,17 +4,17 @@ import { Config, Inject, Provide } from '@midwayjs/decorator';
 // import { Context } from '@midwayjs/koa';
 import { IUserOptions } from '../interface';
 import { JwtService } from '@midwayjs/jwt';
-import { RabbitmqService } from './rabbitmq';
+// import { RabbitmqService } from './rabbitmq.ts1';
 import { RedisService } from '@midwayjs/redis';
-import { User } from '../entity1/User';
+import { User } from '../entity';
 // import { RedisServiceFactory } from '@midwayjs/redis';
 
 @Provide()
-export class UserService extends BaseService {
-  model;
+export class UserService extends BaseService<User> {
+  // model;
   constructor() {
     super();
-    this.model = User;
+    // this.model = User;
   }
 
   // @Inject()
@@ -27,8 +27,8 @@ export class UserService extends BaseService {
   redisService: RedisService;
   @Inject()
   commonSvc: CommonService;
-  @Inject()
-  rabbitmqService: RabbitmqService;
+  // @Inject()
+  // rabbitmqService: RabbitmqService;
   @Config('statusCode')
   statusCode;
 
@@ -39,7 +39,7 @@ export class UserService extends BaseService {
     obj.id = this.getId('SPC');
     console.log('this.ctx :>>', this.ctx)
     obj.creator = obj.creator || this.ctx.user.nickname;
-    return this.model.create(obj).then(d => d.toJSON());
+    return this.model.save(obj)
   }
 
   async saveUser(obj) {
@@ -50,7 +50,7 @@ export class UserService extends BaseService {
       data = await this.addUser(obj);
     }
     data.password = void 0;
-    await this.rabbitmqService.sendToQueue('tasks', { hello: 'world' });
+    // await this.rabbitmqService.sendToQueue('tasks', { hello: 'world' });
     return { code: this.okCode, data };
   }
 

@@ -1,12 +1,12 @@
 import { BaseService } from './base';
 import { CommonService } from './common';
-import { TaskNode } from '../entity1/TaskNode';
+import { TaskNode } from '../entity';
 import { Inject, Provide } from '@midwayjs/decorator';
 import { RedisService } from '@midwayjs/redis';
 
 @Provide()
-export class TaskNodeService extends BaseService {
-  model
+export class TaskNodeService extends BaseService<TaskNode> {
+  declare model
   constructor() {
     super();
     this.model = TaskNode
@@ -27,7 +27,7 @@ export class TaskNodeService extends BaseService {
   async addTaskNode(obj) {
     obj.id = this.getId('TKNO')
     obj.creator = 'YSHI'
-    return this.model.create(obj).then(d => d.toJSON())
+    return this.model.save(obj)
   }
   async saveTaskNode(obj) {
     let data = null

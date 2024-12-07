@@ -1,0 +1,20 @@
+import parseTorrent from 'parse-torrent'
+import fs from 'fs'
+
+
+// export default parseTorrent
+// module.exports = {
+//   parseTorrent
+// }
+// parseTorrent(fs.readFileSync('m:/bt/1 (1).torrent'))
+
+const f = 'D:/project/github/Project-Summary/js/npmTest/fileTest/torrentTest/1.torrent'
+async function ff() {
+  const file = await fs.promises.readFile(f)
+  const a = await parseTorrent(file)
+  console.log('a :>>', a.name)
+  console.log(a.files)
+}
+// ff().then(o=>console.log('o :>>', o)).catch(e=>console.error(e))
+export { ff }
+// module.exports = ff

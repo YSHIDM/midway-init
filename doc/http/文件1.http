@@ -1,0 +1,118 @@
+# doc/http/文件.http
+
+@host = http://127.0.0.1:7002
+@multipart = multipart/form-data; boundary=----xxxxxxxxxxxxxxxxxxxxxx
+# @auth = 123
+# Authorization: {{auth}}
+# content-type: application/json
+
+### 扫描文件夹
+GET {{host}}/file/recordFile?filePath=I:/影视/音乐/音乐1/mp3
+
+### 获取文件详细信息
+GET {{host}}/file/parseFiles
+
+### 获取重复文件
+GET {{host}}/file/getDuplicateFile
+
+### 删除文件
+DELETE {{host}}/file/deleteFile
+Content-Type: application/json
+
+{
+  "filePath": "I:/other/clock/ok/TP/gif/g09/a18.gif"
+}
+
+### 删除文件
+DELETE {{host}}/file/deleteFiles
+Content-Type: application/json
+
+{
+  "filePaths": [
+      "I:/other/clock/ok/TP/gif/g14/Time To Ge_clip112.gif",
+      "I:/other/tp/keep/tba/keep/TheBlackAlley —— Anna (2) [74P]_亚洲色图_色蝴蝶综合_files/3zd0e12yd031056.jpg",
+      "I:/other/tp/page/JVID 雅捷与小章鱼的激情高潮邂逅 [103P] _ 77iizz_files/7a35fe1aea2d.jpg",
+      "I:/other/tp/page/JVID 雅捷与小章鱼的激情高潮邂逅 [103P] _ 77iizz_files/f105c1e1caed.jpg",
+      "I:/other/clock/ok/TP/gif/g08/a69.gif",
+      "I:/other/tp/keep/tba/keep/TheBlackAlley —— Anna (5) [81P]_亚洲色图_色蝴蝶综合_files/3z10b17yb0012c0.jpg",
+      "I:/other/tp/aaahj/a87/15281663.jpg",
+      "I:/other/clock/ok/TP/gif/g08/a75.gif",
+      "I:/other/tp/aaahj/a88/1001495d055de7cd87e7ba89561935a1.jpg",
+      "I:/other/tp/keep/tba/keep/TheBlackAlley —— Anna (3) [69P]_亚洲色图_色蝴蝶综合_files/1z01cy015581862.jpg",
+      "I:/other/2T/tp/tp (6)/a (115).jpg",
+      "I:/other/tp/aaahj/a87/15284798.jpg",
+      "I:/other/2T/tp/tp (3)/b (14).jpg",
+      "I:/other/tp/keep/tba/keep/TheBlackAlley —— Anna (6) [111P]_亚洲色图_色蝴蝶综合_files/9z071y801aef991.jpg",
+      "I:/other/tp/aaahj/a87/53dfa7ace416bca038ded9c8bc532d74.jpg",
+      "I:/other/2T/tp/tp (3)/b (15).jpg",
+      "I:/other/tp/page/JVID 雅捷与小章鱼的激情高潮邂逅 [103P] _ 77iizz_files/01e6e94f034b.jpg",
+      "I:/other/tp/page/JVID 雅捷与小章鱼的激情高潮邂逅 [103P] _ 77iizz_files/2e57918dbccb.jpg",
+      "I:/other/2T/tp/tp (3)/b (40).jpg",
+      "I:/other/tp/aaahj/a89/838e4d42b8fe603ce19e504856718c4f.jpg",
+      "I:/other/2T/tp/tp (4)/b (115).jpg",
+      "I:/other/tp/page/JVID 雅捷与小章鱼的激情高潮邂逅 [103P] _ 77iizz_files/6ee057311507.jpg",
+      "I:/other/clock/ok/TP/gif/g09/a61.gif",
+      "I:/other/tp/keep/tba/keep/TheBlackAlley —— Anna (1) [67P]_亚洲色图_色蝴蝶综合_files/1z0e1yc01027f91.jpg",
+      "I:/other/tp/keep/tba/keep/TheBlackAlley —— Anna (4) [107P]_亚洲色图_色蝴蝶综合_files/0zb0d1dy10513f0.jpg",
+      "I:/other/tp/page/page/帮朋友搬家，朋友无以报答，唯有现身取精[17P] 奇葩影院_files/keludeaps011000166100_center_na621588060655088.gif",
+      "I:/other/tp/page/不同的场景,不同的季节,演绎不同的篇章,时隔半年经典再现!图文并茂附带聊天记录[50P] _ 77iizz_files/keludeaps011000166100_center_na621588060655088.gif",
+      "I:/other/tp/page/page/外冷内热小淫妻主动要求发帖，肥臀美鲍，请君欣赏[20P]_自拍偷拍_777FD_files/keludeaps011000166100_center_na621588060655088.gif",
+      "I:/other/tp/keep/tba/keep/TheBlackAlley —— Anna (7) [78P]_亚洲色图_色蝴蝶综合_files/fz016y012b9d775.jpg",
+      "I:/other/tp/keep/tba/keep/TheBlackAlley —— Anna (6) [111P]_亚洲色图_色蝴蝶综合_files/6zc0015y70610b3.jpg",
+      "I:/other/tp/keep/tba/keep/TheBlackAlley —— Anna (2) [74P]_亚洲色图_色蝴蝶综合_files/3z01fy01fa66568.jpg",
+      "I:/other/tp/keep/tba/keep/TheBlackAlley —— Anna (7) [78P]_亚洲色图_色蝴蝶综合_files/3z01fy010ceba22.jpg",
+      "I:/other/tp/keep/tba/keep/TheBlackAlley —— Anna (5) [81P]_亚洲色图_色蝴蝶综合_files/cz091y701d16a91.jpg",
+      "I:/other/clock/ok/TP/gif/g09/a51.gif",
+      "I:/other/1/tp/P/37 (2).jpg",
+      "I:/other/tp/aaahj/a88/d95a7c6ff072bba83366bfee27195271.jpg",
+      "I:/other/tp/aaahj/a87/b076ca5d967da6c3dcd00ab4e4e09c03.jpg",
+      "I:/other/tp/aaahj/a89/cd065cdeef34083f84521adcccbf345b.jpg",
+      "I:/other/tp/page/JVID 雅捷与小章鱼的激情高潮邂逅 [103P] _ 77iizz_files/71da134d12da.jpg",
+      "I:/other/2T/tp/tp (6)/a (86).jpg",
+      "I:/other/tp/OK/a19/086fc69972d08a4f7cf947015f529071.jpg",
+      "I:/other/tp/keep/tba/keep/TheBlackAlley —— Anna (5) [81P]_亚洲色图_色蝴蝶综合_files/fz001y601921051.jpg",
+      "I:/other/tp/keep/tba/keep/TheBlackAlley —— Anna (5) [81P]_亚洲色图_色蝴蝶综合_files/2z0d1y501000671.jpg",
+      "I:/other/tp/page/JVID 雅捷与小章鱼的激情高潮邂逅 [103P] _ 77iizz_files/a3a24c085406.jpg",
+      "I:/other/tp/keep/tba/keep/TheBlackAlley —— Anna (4) [107P]_亚洲色图_色蝴蝶综合_files/fz081y801b1e137.jpg"
+  ]
+}
+
+### 上传文件
+POST {{host}}/file/upload HTTP/1.1
+Content-Type: {{multipart}}
+
+------xxxxxxxxxxxxxxxxxxxxxx
+Content-Disposition: form-data; name="name"
+
+123.txt
+------xxxxxxxxxxxxxxxxxxxxxx
+Content-Disposition: form-data; name="files"; filename="123.txt"
+
+< ./123.txt
+------xxxxxxxxxxxxxxxxxxxxxx
+Content-Disposition: form-data; name="files"; filename="1.mp3"
+
+< ./1.mp3
+------xxxxxxxxxxxxxxxxxxxxxx--
+
+### 获取文件
+GET {{host}}/file/getFile
+
+
+### 按文件夹查询文件
+GET {{host}}/file/getTargetFileList?dirPath=I:/other/1/pdf/&type=topFile
+
+POST {{host}}/musicPlaylist/addMusicPlaylist
+Content-Type: application/json
+
+{
+  "name": "测试",
+  "type": "音乐"
+}
+
+POST {{host}}/musicPlaylist/addFilesToList/MPLT07489rNBjmpWa9CY
+Content-Type: application/json
+
+{
+  "names": ["丁香","中","张"]
+}

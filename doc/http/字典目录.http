@@ -1,0 +1,30 @@
+# doc/http/文件.http
+
+@host = http://127.0.0.1:7002
+@multipart = multipart/form-data; boundary=----xxxxxxxxxxxxxxxxxxxxxx
+# @auth = 123
+# Authorization: {{auth}}
+# content-type: application/json
+### 获取文件
+GET {{host}}/file/getFile
+
+POST {{host}}/api/get_user
+Content-Type: application/json
+
+{
+  "uid": 123
+}
+
+POST {{host}}/directory/addDirectory
+Content-Type: application/json
+
+{
+  "name": "test",
+  "parentId": "DICjojA54LIdrYkNWbvm"
+}
+
+# {
+#   "directory": {
+#     "name": "test"
+#   }
+# }

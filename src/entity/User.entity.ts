@@ -5,7 +5,7 @@ import { Base } from './Base.entity'
 @Entity()
 export class User extends Base {
   @Column({
-    comment: '别名',
+    comment: '昵称',
   })
   nickname: string;
 

@@ -1,0 +1,5 @@
+
+module.exports = function tf() {
+  import('./torrentTools.mjs').then(tt=>tt.ff().then(o => console.log('o :>>', o)).catch(e => console.error(e)))
+
+}

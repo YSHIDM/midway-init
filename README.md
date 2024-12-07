@@ -56,3 +56,8 @@ saveScheduleForMessage
 getPage
 execCallback
 getMaxTimeOffset
+
+docker run --name postgres -e POSTGRES_PASSWORD=postgres -p 5434:5432 -v D:\Volume:/var/lib/postgresql/data -d postgres
+docker exec -it postgres psql -U postgres
+create database  midway_init;
+docker exec -ti postgres pg_dump -U postgres -t file midway_init > ./t.sql
